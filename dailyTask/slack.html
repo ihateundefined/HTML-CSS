@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Animation Example</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+
+    .scroll-left {
+      width: 50%;
+      height: 100%;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+    }
+
+    .scroll-left .section {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      background-color: #f0f0f0;
+      scroll-snap-align: start;
+    }
+
+    .scroll-right {
+      width: 50%;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #e0e0e0;
+    }
+
+    .scroll-right img {
+      width: 80%;
+      height: auto;
+      transition: opacity 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+
+    
+    <hr>
+
+  <div class="container">
+    <div class="scroll-left">
+      <div class="section" id="section1">Section 1</div>
+      <div class="section" id="section2">Section 2</div>
+      <div class="section" id="section3">Section 3</div>
+      <div class="section" id="section4">Section 4</div>
+    </div>
+    <div class="scroll-right">
+      <img id="image" src="https://www.globaltimes.cn/Portals/0/attachment/2023/2023-07-08/6e0b70bf-bdea-49f6-855a-0a1a8c102440.jpeg" alt="Image 1">
+    </div>
+  </div>
+
+  <script>
+   const images = [
+  "https://www.globaltimes.cn/Portals/0/attachment/2023/2023-07-08/6e0b70bf-bdea-49f6-855a-0a1a8c102440.jpeg",
+  "https://media.cnn.com/api/v1/images/stellar/prod/15-20240308054824741.jpg?c=original",
+  "https://lh5.googleusercontent.com/proxy/bR1gb9cuXQPrVfdBmdmQFie2Ecn65nGErW5h6zimVZa9xDpRXgyeBfmBdFxl9po5SXn0PnrqS_kvHCDjQUxsqtEYnaJWimjXD4jQgg7TVXq0DpKbAPR8uMh2",
+  "https://i.pinimg.com/736x/21/fd/40/21fd40d76f3ab6905e80251e7c9d5b9f.jpg"
+];
+
+const scrollLeft = document.querySelector('.scroll-left');
+const sections = document.querySelectorAll('.scroll-left .section');
+const imageElement = document.getElementById('image');
+
+// 스크롤 이벤트를 디바운싱하여 불필요한 연속 호출 방지
+let timeout;
+scrollLeft.addEventListener('scroll', () => {
+  // 이전 타이머를 취소
+  clearTimeout(timeout);
+
+  // 일정 시간 뒤에 이미지 변경
+  timeout = setTimeout(() => {
+    const scrollPosition = scrollLeft.scrollTop;
+    const sectionHeight = sections[0].offsetHeight;
+    
+    // 현재 스크롤 위치에 해당하는 섹션 인덱스를 계산
+    const index = Math.floor(scrollPosition / sectionHeight);
+    console.log(index);
+
+    // 해당 섹션에 맞는 이미지로 변경
+    if (index >= 0 && index < images.length) {
+      imageElement.src = images[index];
+    }
+  }, 50); // 50ms 대기 후 이미지 변경
+});
+
+  </script>
+
+</body>
+</html>

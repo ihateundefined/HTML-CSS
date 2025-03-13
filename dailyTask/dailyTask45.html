@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- 문제 45 : 고정 너비(200px)의 왼쪽 사이드바와, 나머지 공간을 차지하는 콘텐츠 영역으로 구성된 레이아웃을 만들어라. -->
+    <style>
+      .container {
+        display: flex;
+      }
+      .sidebar {
+        width: 200px;
+        background-color: yellow;
+      }
+      .content {
+        flex-grow: 1;
+        background-color: skyblue;
+      }
+    </style>
+  </head>
+  <body>
+    <h4>
+      고정 너비의 왼쪽 사이드바와, 나머지 공간을 차지하는 콘텐츠 영역으로 구성된
+      레이아웃
+    </h4>
+    <div class="container">
+      <div class="sidebar">
+        <h2>sidebar</h2>
+      </div>
+      <div class="content">
+        <h2>content</h2>
+      </div>
+    </div>
+  </body>
+</html>

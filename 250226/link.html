@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link</title>
+</head>
+<body>
+    <!-- 외부 링크 -->
+    <a href="https://www.naver.com" target="_blank">길벗출판사</a>
+    <a href="https://www.naver.com" target="_self">길벗출판사</a>
+    <a href="https://www.google.com" target="_self">길벗출판사</a>
+
+    <!-- 아래로 내려가도록 하는 내부 링크 -->
+    <a href="#bottom">요 아래를 보시오</a> <!-- 이거 누르면 맨 아래로 내려가도록 할 것 -->
+    <p style="height: 3000px;">....</p>
+    <a name="bottom">아래쪽</a>
+    <hr />
+
+    <!-- 위로 아래로 왔다갔다하도록 하는 내부 링크 -->
+    <a name="top" href="#bottom1">요 아래를 보시오</a>
+    <p style="height: 3000px;">....</p>
+    <a name="bottom1" href="#top">아래쪽</a>
+</body>
+</html>

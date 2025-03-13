@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개발자 포트폴리오</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #fafafa;
+        }
+
+        .container {
+            max-width: 935px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: white;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Billabong', cursive;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        .search-bar {
+            background-color: #efefef;
+            border-radius: 8px;
+            padding: 8px 16px;
+            width: 90%;
+            max-width: 300px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 100%;
+            margin-left: 8px;
+        }
+
+        .profile-section {
+            display: flex;
+            padding: 30px 0;
+            border-bottom: 1px solid #dbdbdb;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-right: 30px;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .profile-picture img {
+            width: 144px;
+            height: 144px;
+            border-radius: 50%;
+            border: 2px solid white;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .username {
+            font-size: 28px;
+            font-weight: 300;
+            margin-right: 20px;
+        }
+
+        .action-button {
+            background-color: #0095f6;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .stats {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            margin-right: 40px;
+        }
+
+        .bio {
+            margin-bottom: 5px;
+        }
+
+        .website a {
+            color: #00376b;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .story-highlights {
+            display: flex;
+            padding: 20px 0;
+            overflow-x: auto;
+            border-bottom: 1px solid #dbdbdb;
+        }
+
+        .highlight {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 20px;
+            width: 80px;
+        }
+
+        .highlight-image {
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+            border: 1px solid #dbdbdb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+            background-color: #f8f8f8;
+        }
+
+        .highlight-title {
+            font-size: 12px;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        .content-tabs {
+            display: flex;
+            justify-content: center;
+            border-top: 1px solid #dbdbdb;
+        }
+
+        .tab {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            cursor: pointer;
+            color: #8e8e8e;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin: 0 30px;
+        }
+
+        .tab.active {
+            color: #262626;
+            border-top: 1px solid #262626;
+            margin-top: -1px;
+        }
+
+        .tab i {
+            margin-right: 6px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-top: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 1/1;
+            overflow: hidden;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .overlay-content {
+            color: white;
+            font-weight: 600;
+            display: flex;
+        }
+
+        .overlay-stat {
+            display: flex;
+            align-items: center;
+            margin: 0 10px;
+        }
+
+        .overlay-stat i {
+            margin-right: 5px;
+        }
+
+        /* 스킬 아이콘에 대한 스타일 */
+        .skill-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            background-color: #333;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .profile-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .profile-picture {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .stats {
+                justify-content: space-around;
+            }
+
+            .gallery {
+                gap: 3px;
+            }
+
+            .stat-item {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">포트폴리오</div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="profile-section">
+            <div class="profile-picture">
+                <img id="profile-img" src="https://via.placeholder.com/150" alt="프로필 사진">
+            </div>
+            <div class="profile-info">
+                <div class="profile-header">
+                    <h1 class="username">개발자이름</h1>
+                    <button class="action-button">연락하기</button>
+                </div>
+                <div class="stats">
+                    <div class="stat-item"><strong id="projects-count">10</strong> 프로젝트</div>
+                    <div class="stat-item"><strong id="experience-years">5</strong> 경력</div>
+                    <div class="stat-item"><strong id="contributions">150</strong> 기여활동</div>
+                </div>
+                <div class="bio">
+                    <strong id="full-name">홍길동</strong>
+                </div>
+                <div class="bio" id="bio-text">안녕하세요! 저는 웹 개발자입니다. 사용자 경험을 중요시하며 
+                    깔끔하고 효율적인 코드를 작성하기 위해 노력합니다.</div>
+                <div class="website">
+                    <a href="#" id="website-link">github.com/username</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="story-highlights">
+            <div class="highlight">
+                <div class="highlight-image">
+                    <div class="skill-icon">C</div>
+                </div>
+                <div class="highlight-title">C</div>
+            </div>
+            <div class="highlight">
+                <div class="highlight-image">
+                    <div class="skill-icon">C++</div>
+                </div>
+                <div class="highlight-title">C++</div>
+            </div>
+            <div class="highlight">
+                <div class="highlight-image">
+                    <div class="skill-icon">JS</div>
+                </div>
+                <div class="highlight-title">JavaScript</div>
+            </div>
+            <div class="highlight">
+                <div class="highlight-image">
+                    <div class="skill-icon">HTML</div>
+                </div>
+                <div class="highlight-title">HTML</div>
+            </div>
+            <div class="highlight">
+                <div class="highlight-image">
+                    <div class="skill-icon">CSS</div>
+                </div>
+                <div class="highlight-title">CSS</div>
+            </div>
+        </section>
+
+        <div class="content-tabs">
+            <div class="tab active" data-tab="posts">
+                <i class="icon">📋</i> 포트폴리오
+            </div>
+            <div class="tab" data-tab="videos">
+                <i class="icon">🎬</i> 프로젝트
+            </div>
+            <div class="tab" data-tab="tagged">
+                <i class="icon">🔖</i> 자격증
+            </div>
+        </div>
+
+        <div class="gallery" id="gallery">
+            <!-- 포트폴리오 항목들은 JavaScript로 동적 생성됩니다 -->
+        </div>
+    </main>
+
+    <script>
+        // 샘플 포트폴리오 데이터
+        const portfolioItems = [
+            {
+                title: '웹사이트 리디자인',
+                image: 'https://via.placeholder.com/300',
+                likes: 125,
+                comments: 10,
+                description: '고객사 웹사이트 리디자인 프로젝트'
+            },
+            {
+                title: '모바일 앱 개발',
+                image: 'https://via.placeholder.com/300',
+                likes: 89,
+                comments: 5,
+                description: 'iOS/Android 크로스 플랫폼 앱 개발'
+            },
+            {
+                title: 'API 서버 구축',
+                image: 'https://via.placeholder.com/300',
+                likes: 201,
+                comments: 15,
+                description: 'RESTful API 서버 구축 및 최적화'
+            },
+            {
+                title: '데이터 시각화 대시보드',
+                image: 'https://via.placeholder.com/300',
+                likes: 156,
+                comments: 8,
+                description: '실시간 데이터 시각화 대시보드 개발'
+            },
+            {
+                title: '쇼핑몰 개발',
+                image: 'https://via.placeholder.com/300',
+                likes: 178,
+                comments: 12,
+                description: '반응형 쇼핑몰 웹사이트 개발'
+            },
+            {
+                title: '게임 개발',
+                image: 'https://via.placeholder.com/300',
+                likes: 210,
+                comments: 20,
+                description: '자바스크립트 기반 웹 게임 개발'
+            }
+        ];
+
+        // 포트폴리오 항목 생성 함수
+        function renderPortfolioItems() {
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = '';
+            
+            portfolioItems.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'gallery-item';
+                
+                itemElement.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="overlay">
+                        <div class="overlay-content">
+                            <div class="overlay-stat">
+                                <i>👍</i> ${item.likes}
+                            </div>
+                            <div class="overlay-stat">
+                                <i>💬</i> ${item.comments}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                itemElement.addEventListener('click', () => {
+                    alert(`${item.title}: ${item.description}`);
+                });
+                
+                gallery.appendChild(itemElement);
+            });
+        }
+
+        // 탭 전환 기능
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                alert(`${tab.textContent.trim()} 탭을 클릭하셨습니다. 이 기능은 추가 개발이 필요합니다.`);
+            });
+        });
+
+        // 초기 포트폴리오 항목 렌더링
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPortfolioItems();
+        });
+
+        // 개인 정보 업데이트를 위한 함수 (실제로는 백엔드와 연동하여 데이터를 가져옴)
+        function updateProfileInfo(data) {
+            document.getElementById('profile-img').src = data.profileImage;
+            document.getElementById('full-name').textContent = data.fullName;
+            document.getElementById('bio-text').textContent = data.bio;
+            document.getElementById('website-link').textContent = data.website;
+            document.getElementById('website-link').href = data.website;
+            document.getElementById('projects-count').textContent = data.projectsCount;
+            document.getElementById('experience-years').textContent = data.experienceYears;
+            document.getElementById('contributions').textContent = data.contributions;
+        }
+
+        // 예시 데이터로 프로필 정보 업데이트
+        updateProfileInfo({
+            profileImage: 'https://via.placeholder.com/150',
+            fullName: '홍길동',
+            bio: '안녕하세요! 저는 웹 개발자입니다. 사용자 경험을 중요시하며 깔끔하고 효율적인 코드를 작성하기 위해 노력합니다.',
+            website: 'github.com/username',
+            projectsCount: 10,
+            experienceYears: 5,
+            contributions: 150
+        });
+    </script>
+</body>
+</html>

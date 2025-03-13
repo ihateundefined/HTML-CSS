@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Tag</title>
+</head>
+<body>
+    <form method="post" action="">
+        <input type="text" name="myid" size="30" maxlength="8" value="이름입력" /><br />
+        <input type="password" name="mypw" size="30" maxlength="8" value="비밀번호입력" /><br />
+        <p></p>
+        * 평소에 선호하는 언어의 종류를 고르세용<br />
+        <input type="checkbox" name="cb1"/> HTML
+        <input type="checkbox" name="cb2"/> C언어
+        <input type="checkbox" name="cb3"/> C++
+        <input type="checkbox" name="cb4"/> 자바스크립트
+        <br />
+        <p></p>
+        * 당신의 PC를 포멧하실래요?<br />
+        <input type="radio" name="rd" value="yes" checked /> 네
+        <input type="radio" name="rd" value="no" /> 아니요
+        <br />
+        <p></p>
+        <input type="submit" value="전송" />
+        <p></p>
+        <input type="image" src="../pictures/tree.jpg" width="50" height="30" />
+        <p></p>
+        <select>
+            <option>당신의 세대는??</option>
+            <option value="10">10대</option>
+            <option value="20" selected>20대</option>
+            <option value="30">30대</option>
+            <option value="40">40대</option>
+            <option value="50">50대</option>
+        </select>
+        <p></p>
+        * 파일 업로드
+        <input type="file" name="myfile" />
+    </form>
+</body>
+</html>

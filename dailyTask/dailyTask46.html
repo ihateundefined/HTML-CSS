@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- 문제 46 : 상단에 헤더, 아래에 두 개의 열(왼쪽 50%, 오른쪽 50%)로 구성된 레이아웃을 만들어라. -->
+    <style>
+      .container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+      .header {
+        background-color: #f1c40f;
+        height: 10%;
+      }
+      .content {
+        display: flex;
+        flex-direction: row;
+        height: 90%;
+      }
+      .left {
+        background-color: #1abc9c;
+        width: 50%;
+      }
+      .right {
+        background-color: #3498db;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <h4>상단에 헤더, 아래에 두 개의 열로 구성된 레이아웃</h4>
+    <div class="container">
+      <div class="header">
+        <h4>헤더</h4>
+      </div>
+      <div class="content">
+        <div class="left">
+          <h4>왼쪽</h4>
+        </div>
+        <div class="right">
+          <h4>오른쪽</h4>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

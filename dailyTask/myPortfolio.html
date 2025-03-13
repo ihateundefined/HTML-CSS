@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>조선희 포트폴리오</title>
+    <!-- Pretendard 폰트 적용 -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
+    />
+    <!-- Google Font 적용 -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Billabong&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui,
+          Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo",
+          "Noto Sans KR", "Malgun Gothic", sans-serif;
+      }
+
+      body {
+        background-color: #fafafa;
+        overflow-x: hidden; /* 가로 스크롤 방지 */
+      }
+
+      .container {
+        max-width: 935px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      header {
+        background-color: white;
+        border-bottom: 1px solid #dbdbdb;
+        padding: 10px 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .logo {
+        font-size: 28px;
+        text-align: center;
+        font-weight: 600;
+      }
+
+      .search-bar {
+        background-color: #efefef;
+        border-radius: 8px;
+        padding: 8px 16px;
+        width: 90%;
+        max-width: 300px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+      }
+
+      .search-bar input {
+        background: transparent;
+        border: none;
+        outline: none;
+        width: 100%;
+        margin-left: 8px;
+      }
+
+      .profile-section {
+        display: flex;
+        padding: 30px 0;
+        border-bottom: 1px solid #dbdbdb;
+      }
+
+      .profile-picture {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin-right: 30px;
+        background: linear-gradient(
+          45deg,
+          #90c3fc,
+          #6aa8fc,
+          #4f91fc,
+          #377afc,
+          #2463eb
+        );
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .profile-picture img {
+        width: 144px;
+        height: 144px;
+        border-radius: 50%;
+        border: 2px solid white;
+        object-fit: cover;
+        object-position: -50px center;
+      }
+
+      .profile-info {
+        flex: 1;
+      }
+
+      .profile-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .username {
+        font-size: 28px;
+        font-weight: 300;
+        margin-right: 20px;
+      }
+
+      .action-button {
+        background-color: #0095f6;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 6px 16px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .stats {
+        display: flex;
+        margin-bottom: 20px;
+      }
+
+      .stat-item {
+        margin-right: 40px;
+      }
+
+      .bio {
+        margin-bottom: 5px;
+      }
+
+      .website a {
+        color: #00376b;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      /* 스크롤 관련 스타일 수정 */
+      .container-scroll {
+        display: flex;
+        height: auto;
+      }
+
+      .scroll-left {
+        width: 50%;
+        height: auto;
+      }
+
+      .scroll-left .section {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+      }
+
+      /* 오른쪽 이미지 효과 */
+      .scroll-right {
+        width: 50%;
+        position: sticky;
+        top: 100px;
+        height: calc(100vh - 100px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        perspective: 1000px; /* 3D 효과 위한 perspective 추가 */
+      }
+
+      .image-container {
+        position: relative;
+        width: 80%;
+        height: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .slide-image {
+        position: absolute;
+        width: 100%;
+        max-height: 80vh;
+        object-fit: contain;
+        opacity: 0;
+        transform: translateZ(-100px) scale(0.8);
+        transition: opacity 0.5s ease-in-out, transform 0.7s ease-in-out;
+        pointer-events: none; /* 이미지가 클릭 안되도록 */
+      }
+
+      .slide-image.active {
+        opacity: 1;
+        transform: translateZ(0) scale(1);
+        z-index: 1;
+      }
+
+      .slide-image.exit {
+        opacity: 0;
+        transform: translateZ(-200px) scale(0.6);
+      }
+
+      .slide-image.enter {
+        opacity: 0;
+        transform: translateZ(-100px) scale(0.8);
+      }
+
+      /* 스킬 로고 관련 추가 스타일 */
+      .story-highlights {
+        display: flex;
+        padding: 20px 0;
+        overflow-x: auto;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .highlight {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 10px 15px 10px;
+        width: 70px;
+      }
+
+      .highlight a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: inherit;
+        width: 100%;
+      }
+
+      .highlight-image {
+        width: 66px;
+        height: 66px;
+        border-radius: 50%;
+        border: 1px solid #dbdbdb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 5px;
+        background-color: #f8f8f8;
+        overflow: hidden;
+      }
+
+      .skill-logo {
+        width: 70%;
+        height: 70%;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+      }
+
+      .highlight a:hover .skill-logo {
+        transform: scale(1.1);
+      }
+
+      .highlight a:hover .highlight-title {
+        font-weight: 800;
+      }
+
+      .highlight-title {
+        font-size: 15px;
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        transition: font-weight 0.3s ease;
+      }
+
+      /* 탭 영역 */
+      .content-tabs {
+        display: flex;
+        justify-content: center;
+        border-top: 1px solid #dbdbdb;
+      }
+
+      .tab {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        cursor: pointer;
+        color: #8e8e8e;
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        margin: 0 30px;
+      }
+
+      .tab.active {
+        color: #262626;
+        border-top: 1px solid #262626;
+        margin-top: -1px;
+      }
+
+      .tab i {
+        margin-right: 6px;
+      }
+
+      /* 반응형 미디어 쿼리 추가 */
+      @media screen and (max-width: 768px) {
+        .story-highlights {
+          justify-content: space-around;
+        }
+
+        .highlight {
+          width: 60px;
+          margin: 0 5px 10px 5px;
+        }
+
+        .highlight-image {
+          width: 56px;
+          height: 56px;
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        .highlight {
+          width: 50px;
+        }
+
+        .highlight-image {
+          width: 46px;
+          height: 46px;
+        }
+
+        .highlight-title {
+          font-size: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">포트폴리오</div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="profile-section">
+        <div class="profile-picture">
+          <img
+            id="profile-img"
+            src="https://img.mbn.co.kr/filewww/news/2023/08/27/169312644164eb0f2960488.jpg"
+            alt="프로필 사진"
+          />
+        </div>
+        <div class="profile-info">
+          <div class="profile-header">
+            <h1 class="username">조선희</h1>
+            <button class="action-button">연락하기</button>
+          </div>
+          <div class="stats">
+            <div class="stat-item">
+              개인 프로젝트 <strong id="projects-count">2</strong>
+            </div>
+            <div class="stat-item">
+              팀 프로젝트<strong id="contributions">1</strong>
+            </div>
+            <div class="stat-item">
+              자격증 <strong id="experience-years">2</strong>
+            </div>
+          </div>
+          <div class="bio">
+            <strong id="full-name">Sunhee Cho</strong>
+          </div>
+          <div class="bio" id="bio-text">
+            사용자 경험을 중요시하며 깔끔하고 효율적인 코드를 작성하기 위해
+            노력하는 개발자
+          </div>
+          <div class="website">
+            <a href="https://github.com/sunhcho227" id="website-link"
+              >github.com/sunhcho227</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section class="story-highlights">
+        <div class="highlight">
+          <a
+            href="https://en.wikipedia.org/wiki/C_(programming_language)"
+            target="_blank"
+          >
+            <div class="highlight-image">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/1/19/C_Logo.png"
+                alt="C 로고"
+                class="skill-logo"
+              />
+            </div>
+            <div class="highlight-title">C</div>
+          </a>
+        </div>
+        <div class="highlight">
+          <a href="https://en.wikipedia.org/wiki/C%2B%2B" target="_blank">
+            <div class="highlight-image">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg"
+                alt="C++ 로고"
+                class="skill-logo"
+              />
+            </div>
+            <div class="highlight-title">C++</div>
+          </a>
+        </div>
+        <div class="highlight">
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+            target="_blank"
+          >
+            <div class="highlight-image">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png"
+                alt="JavaScript 로고"
+                class="skill-logo"
+              />
+            </div>
+            <div class="highlight-title">JS</div>
+          </a>
+        </div>
+        <div class="highlight">
+          <a href="https://www.java.com/" target="_blank">
+            <div class="highlight-image">
+              <img
+                src="https://www.vectorlogo.zone/logos/java/java-icon.svg"
+                alt="Java 로고"
+                class="skill-logo"
+              />
+            </div>
+            <div class="highlight-title">Java</div>
+          </a>
+        </div>
+        <div class="highlight">
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/HTML"
+            target="_blank"
+          >
+            <div class="highlight-image">
+              <img
+                src="https://www.w3.org/html/logo/badge/html5-badge-h-solo.png"
+                alt="HTML 로고"
+                class="skill-logo"
+              />
+            </div>
+            <div class="highlight-title">HTML</div>
+          </a>
+        </div>
+        <div class="highlight">
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/CSS"
+            target="_blank"
+          >
+            <div class="highlight-image">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg"
+                alt="CSS 로고"
+                class="skill-logo"
+              />
+            </div>
+            <div class="highlight-title">CSS</div>
+          </a>
+        </div>
+        <div class="highlight">
+          <a href="https://en.wikipedia.org/wiki/SQL" target="_blank">
+            <div class="highlight-image">
+              <img
+                src="https://www.svgrepo.com/show/331760/sql-database-generic.svg"
+                alt="SQL 로고"
+                class="skill-logo"
+              />
+            </div>
+            <div class="highlight-title">SQL</div>
+          </a>
+        </div>
+        <div class="highlight">
+          <a href="https://en.wikipedia.org/wiki/NoSQL" target="_blank">
+            <div class="highlight-image">
+              <img
+                src="https://www.svgrepo.com/show/373845/mongo.svg"
+                alt="NoSQL 로고"
+                class="skill-logo"
+              />
+            </div>
+            <div class="highlight-title">NoSQL</div>
+          </a>
+        </div>
+        <div class="highlight">
+          <a href="https://azure.microsoft.com/" target="_blank">
+            <div class="highlight-image">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Microsoft_Azure.svg"
+                alt="Azure 로고"
+                class="skill-logo"
+              />
+            </div>
+            <div class="highlight-title">Azure</div>
+          </a>
+        </div>
+      </section>
+
+      <div class="content-tabs">
+        <div class="tab active" data-tab="personalProject">
+          🚀 개인 프로젝트
+        </div>
+        <div class="tab" data-tab="teamProject">🙏 팀 프로젝트</div>
+        <div class="tab" data-tab="tagged">💡 자격증</div>
+      </div>
+
+      <!-- 통합된 스크롤 영역 -->
+      <div class="container-scroll">
+        <div class="scroll-left">
+          <div class="section" id="section1">Section 1</div>
+          <div class="section" id="section2">Section 2</div>
+          <div class="section" id="section3">Section 3</div>
+          <div class="section" id="section4">Section 4</div>
+        </div>
+        <div class="scroll-right">
+          <div class="image-container">
+            <img
+              id="image0"
+              class="slide-image active"
+              src="https://www.globaltimes.cn/Portals/0/attachment/2023/2023-07-08/6e0b70bf-bdea-49f6-855a-0a1a8c102440.jpeg"
+              alt="Image 1"
+            />
+            <img
+              id="image1"
+              class="slide-image"
+              src="https://media.cnn.com/api/v1/images/stellar/prod/15-20240308054824741.jpg?c=original"
+              alt="Image 2"
+            />
+            <img
+              id="image2"
+              class="slide-image"
+              src="https://lh5.googleusercontent.com/proxy/bR1gb9cuXQPrVfdBmdmQFie2Ecn65nGErW5h6zimVZa9xDpRXgyeBfmBdFxl9po5SXn0PnrqS_kvHCDjQUxsqtEYnaJWimjXD4jQgg7TVXq0DpKbAPR8uMh2"
+              alt="Image 3"
+            />
+            <img
+              id="image3"
+              class="slide-image"
+              src="https://i.pinimg.com/736x/21/fd/40/21fd40d76f3ab6905e80251e7c9d5b9f.jpg"
+              alt="Image 4"
+            />
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // 탭 전환 기능
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document
+            .querySelectorAll(".tab")
+            .forEach((t) => t.classList.remove("active"));
+          tab.classList.add("active");
+          alert(
+            `${tab.textContent.trim()} 탭을 클릭하셨네요! 추가 개발 예정입니다!`
+          );
+        });
+      });
+
+      // 이미지 전환 로직
+      let currentImageIndex = 0;
+      const totalImages = 4;
+
+      // 모든 이미지 요소 가져오기
+      const imageElements = [];
+      for (let i = 0; i < totalImages; i++) {
+        imageElements.push(document.getElementById(`image${i}`));
+      }
+
+      // 스크롤 이벤트 리스너
+      window.addEventListener("scroll", () => {
+        const sections = document.querySelectorAll(".section");
+
+        // 현재 스크롤 위치 확인
+        const scrollY = window.scrollY;
+
+        // 각 섹션의 위치를 확인
+        sections.forEach((section, index) => {
+          const rect = section.getBoundingClientRect();
+
+          // 섹션이 화면 중앙에 가까울 때 이미지 변경
+          if (
+            rect.top < window.innerHeight / 2 &&
+            rect.bottom > window.innerHeight / 2
+          ) {
+            if (index < totalImages && index !== currentImageIndex) {
+              // 현재 이미지 퇴장 애니메이션
+              imageElements[currentImageIndex].classList.remove("active");
+              imageElements[currentImageIndex].classList.add("exit");
+
+              setTimeout(() => {
+                // 이전 이미지 클래스 초기화
+                imageElements[currentImageIndex].classList.remove("exit");
+                imageElements[currentImageIndex].classList.add("enter");
+
+                // 새 이미지 인덱스 설정
+                currentImageIndex = index;
+
+                // 새 이미지 등장 애니메이션
+                imageElements[currentImageIndex].classList.remove("enter");
+                imageElements[currentImageIndex].classList.add("active");
+              }, 300); // 300ms 후 새 이미지 등장
+            }
+          }
+        });
+      });
+
+      // 초기 세팅: 첫 번째 이미지를 제외한 모든 이미지에 enter 클래스 추가
+      for (let i = 1; i < totalImages; i++) {
+        imageElements[i].classList.add("enter");
+      }
+    </script>
+  </body>
+</html>
